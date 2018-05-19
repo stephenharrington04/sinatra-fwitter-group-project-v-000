@@ -18,8 +18,16 @@ class ApplicationController < Sinatra::Base
       !!session[:user_id]
     end
 
+    def go_log_in
+      redirect "/login" if !logged_in?
+    end
+
     def current_user
       User.find(session[:user_id])
+    end
+
+    def current_tweet
+      Tweet.find(params[:id])
     end
   end
 

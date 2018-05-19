@@ -1,14 +1,14 @@
 class TweetController < ApplicationController
 
   get '/tweets' do
-    redirect "/login" if session[:user_id] == nil
-    @user = User.find(session[:user_id])
+    go_log_in
+    @user = current_user
     erb :'/tweets/tweets'
   end
 
   get '/tweets/new' do
-    redirect "/login" if session[:user_id] == nil
-    @user = User.find(session[:user_id])
+    go_log_in
+    @user = current_user
     erb :'/tweets/create_tweet'
   end
 
@@ -19,28 +19,28 @@ class TweetController < ApplicationController
   end
 
   get '/tweets/:id' do
-    redirect "/login" if session[:user_id] == nil
-    @tweet = Tweet.find(params[:id])
+    go_log_in
+    @tweet = current_tweet
     erb :'/tweets/show_tweet'
   end
 
   get '/tweets/:id/edit' do
-    redirect "/login" if session[:user_id] == nil
-    @tweet = Tweet.find(params[:id])
+    go_log_in
+    @tweet = current_tweet
     erb :'/tweets/edit_tweet'
   end
 
   patch '/tweets/:id' do
     redirect :"/tweets/#{params[:id]}/edit" if params["content"] == ""
-    @tweet = Tweet.find(params[:id])
+    @tweet = current_tweet
     @tweet.update(content: params[:content])
     @tweet.save
     redirect "/tweets"
   end
 
   delete '/tweets/:id/delete' do
-    redirect "/login" if session[:user_id] == nil
-    @tweet = Tweet.find(params[:id])
+    go_log_in
+    @tweet = current_tweet
     redirect "/tweets" if session[:user_id] != @tweet.user_id
     @tweet.delete
     redirect "/tweets"
