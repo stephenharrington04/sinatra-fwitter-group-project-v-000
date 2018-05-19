@@ -1,0 +1,41 @@
+class UserController < ApplicationController
+
+  get '/signup' do
+    redirect "/tweets/tweets" if session[:user_id]
+    erb :'users/create_user'
+  end
+
+  post '/signup' do
+    redirect "/signup" if params.has_value?("")
+
+    user = User.create(username: params[:username], email: params[:email], password: params[:password])
+
+    session[:user_id] = user.id
+    redirect "/tweets"
+  end
+
+  get '/login' do
+    redirect "/tweets" if session[:user_id]
+    erb :'/users/login'
+  end
+
+  post '/login' do
+    user = User.find_by(username: params[:username])
+    if user && user.authenticate(params[:password])
+      session[:user_id] = user.id
+      redirect "/tweets"
+    end
+    redirect "/users/login"
+  end
+
+  get '/logout' do
+    session.clear
+    redirect "/users/login"
+  end
+
+  get '/users/:id/show' do
+    @user = User.find_by(session[:user_id])
+    erb :'/users/show'
+  end
+
+end
