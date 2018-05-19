@@ -1,5 +1,9 @@
-Welcome,
+<h2>Welcome, <%= @user.username %>!</h2>
 
+<h4>Here's What's Trending: </h4>
 <% Tweet.all.each do |tweet| %>
-  <%= tweet.content %>
+  <%= User.find(tweet.user_id).username %> Tweets:<br>
+  <a href="/tweets/<%= tweet.id %>"><%= tweet.content %></a><br>
 <% end %>
+<br>
+<a href="/tweets/new">Create A New Tweet Here</a><br>
