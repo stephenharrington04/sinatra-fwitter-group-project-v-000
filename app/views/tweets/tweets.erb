@@ -1,6 +1,5 @@
 Welcome,
 
-<form action="/" method="post">
-  <input type="submit" value="Submit">
-
-</form>
+<% Tweet.all.each do |tweet| %>
+  <%= tweet.content %>
+<% end %>

@@ -33,8 +33,8 @@ class UserController < ApplicationController
     redirect "/users/login"
   end
 
-  get '/users/:id/show' do
-    @user = User.find_by(session[:user_id])
+  get '/users/:slug' do
+    @user = User.find_by_slug(slug)
     erb :'/users/show'
   end
 
