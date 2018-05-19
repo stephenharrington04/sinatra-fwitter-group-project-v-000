@@ -21,12 +21,14 @@ class TweetController < ApplicationController
   get '/tweets/:id' do
     go_log_in
     @tweet = current_tweet
+    @tweet = Tweet.find(params[:id])
     erb :'/tweets/show_tweet'
   end
 
   get '/tweets/:id/edit' do
     go_log_in
     @tweet = current_tweet
+    @tweet = Tweet.find(params[:id])
     erb :'/tweets/edit_tweet'
   end
 
@@ -41,6 +43,7 @@ class TweetController < ApplicationController
   delete '/tweets/:id/delete' do
     go_log_in
     @tweet = current_tweet
+    @tweet = Tweet.find(params[:id])
     redirect "/tweets" if session[:user_id] != @tweet.user_id
     @tweet.delete
     redirect "/tweets"
