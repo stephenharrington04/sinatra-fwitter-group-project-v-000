@@ -1,7 +1,7 @@
 <h1>Welcome to your homepage, <%= @user.username %>!</h1>
 <h4>Here are all of your current Tweets:</h4>
 <% @user.tweets.each do |tweet| %>
-  <%= tweet.content %><br>
+  <a href="/tweets/<%= tweet.id %>/edit"><%= tweet.content %></a><br>
 <% end %><br>
 
 <h4>What would you like to do next?</h4>
