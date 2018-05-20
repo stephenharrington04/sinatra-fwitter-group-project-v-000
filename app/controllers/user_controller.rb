@@ -1,5 +1,4 @@
 class UserController < ApplicationController
-
   get '/signup' do
     redirect "/tweets" if logged_in?
     erb :'users/create_user'
@@ -7,9 +6,7 @@ class UserController < ApplicationController
 
   post '/signup' do
     redirect "/signup" if params.has_value?("")
-
     user = User.create(username: params[:username], email: params[:email], password: params[:password])
-
     session[:user_id] = user.id
     redirect "/tweets"
   end
@@ -34,7 +31,7 @@ class UserController < ApplicationController
   end
 
   get '/users/:slug' do
-    @user = User.find_by_slug(slug)
+    @user = User.find_by_slug(params[:slug])
     erb :'/users/show'
   end
 

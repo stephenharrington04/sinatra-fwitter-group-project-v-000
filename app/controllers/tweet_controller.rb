@@ -15,6 +15,9 @@ class TweetController < ApplicationController
   post '/tweets' do
     redirect :"/tweets/new" if params["content"] == ""
     @tweet = Tweet.create(content: params["content"], user_id: session[:user_id])
+
+    flash[:message] = "Successfully created Tweet."
+
     redirect :"/tweets"
   end
 
@@ -37,6 +40,9 @@ class TweetController < ApplicationController
     @tweet = current_tweet
     @tweet.update(content: params[:content])
     @tweet.save
+
+    flash[:message] = "Successfully updated Tweet."
+
     redirect "/tweets"
   end
 
@@ -46,6 +52,9 @@ class TweetController < ApplicationController
     @tweet = Tweet.find(params[:id])
     redirect "/tweets" if session[:user_id] != @tweet.user_id
     @tweet.delete
+
+    flash[:message] = "Successfully deleted Tweet."
+
     redirect "/tweets"
   end
 
